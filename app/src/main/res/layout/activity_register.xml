@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:padding="24dp"
+       android:gravity="center_horizontal">
+
+      <!-- App Logo -->
+      <ImageView
+          android:id="@+id/logo"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:src="@drawable/kakuro_game_icon"
+          android:contentDescription="App Logo"
+          android:layout_marginBottom="16dp" />
+
+      <!-- App Title -->
+      <TextView
+          android:id="@+id/titleTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Register"
+          android:textColor="@color/blue"
+          android:textSize="24sp"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:layout_marginBottom="16dp" />
+
+      <!-- First Name Input -->
+      <EditText
+          android:id="@+id/firstName"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="First Name"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="12dp" />
+
+      <!-- Last Name Input -->
+      <EditText
+          android:id="@+id/lastName"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Last Name"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="12dp" />
+
+      <!-- Phone Number Input -->
+      <EditText
+          android:id="@+id/phoneNumber"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Phone Number"
+          android:inputType="phone"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="12dp" />
+
+      <!-- Email Input -->
+      <EditText
+          android:id="@+id/emailRegistration"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Email"
+          android:inputType="textEmailAddress"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="12dp" />
+
+      <!-- Password Input -->
+      <EditText
+          android:id="@+id/passwordRegistration"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Password"
+          android:inputType="textPassword"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="6dp" />
+
+      <!-- Password Strength Indicator -->
+      <TextView
+          android:id="@+id/passwordStrengthText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Password Strength"
+          android:textColor="@android:color/darker_gray"
+          android:textSize="14sp"
+          android:visibility="gone"
+          android:layout_marginBottom="12dp" />
+
+      <!-- Confirm Password Input -->
+      <EditText
+          android:id="@+id/confirmPasswordRegistration"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Confirm Password"
+          android:inputType="textPassword"
+          android:padding="12dp"
+          android:background="@android:drawable/edit_text"
+          android:textSize="16sp"
+          android:layout_marginBottom="20dp" />
+
+      <!-- Register Button -->
+      <Button
+          android:id="@+id/registerBtn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Register"
+          android:textColor="@android:color/white"
+          android:backgroundTint="@color/blue"
+          android:textSize="18sp"
+          android:padding="12dp"
+          android:layout_marginBottom="16dp"
+          android:layout_gravity="center" />
+
+      <!-- Login Link -->
+      <TextView
+          android:id="@+id/loginLink"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Already have an account? Login"
+          android:textColor="@color/cyan"
+          android:textSize="14sp"
+          android:textStyle="bold"
+          android:layout_marginTop="8dp"
+          android:gravity="center"
+          android:layout_gravity="center" />
+   </LinearLayout>
+</ScrollView>

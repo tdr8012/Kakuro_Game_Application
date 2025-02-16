@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Basic Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#3659E3</color>
+    <color name="gold">#B3A246</color>
+    <color name="gray">#919190</color>
+    <color name="cyan">#7CE0E6</color>
+
+    <!-- Primary Theme Colors -->
+    <color name="colorPrimary">#FF000000</color>  <!-- Black -->
+    <color name="colorPrimaryVariant">#1A1A1A</color>  <!-- Darker Black -->
+    <color name="colorOnPrimary">#FFFFFFFF</color>  <!-- White Text on Black -->
+
+    <color name="colorAccent">#3659E3</color>  <!-- Blue Accent -->
+    <color name="colorOnAccent">#FFFFFF</color>  <!-- White Text on Blue -->
+
+    <!-- Button Colors -->
+    <color name="colorEasy">#4CAF50</color>  <!-- Green for Easy -->
+    <color name="colorMedium">#FFC107</color>  <!-- Yellow for Medium -->
+    <color name="colorHard">#F44336</color>  <!-- Red for Hard -->
+    <color name="colorGold">#FFD700</color>  <!-- Gold for Scoreboard -->
+    <color name="colorBlue">#2196F3</color>  <!-- Blue for Profile -->
+    <color name="colorRedDark">#B71C1C</color>  <!-- Dark Red for Logout -->
+</resources>

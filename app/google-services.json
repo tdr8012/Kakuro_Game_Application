@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "327648422878",
+    "project_id": "kakurogameapp",
+    "storage_bucket": "kakurogameapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327648422878:android:57dea6cd8e4a34b3f7cb4f",
+        "android_client_info": {
+          "package_name": "com.example.exam_midterm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIgnkDlMfP3-spo0fqIcM-DSGQk40B94Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327648422878:android:4880a7d12b4f3818f7cb4f",
+        "android_client_info": {
+          "package_name": "com.example.kakurogameapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIgnkDlMfP3-spo0fqIcM-DSGQk40B94Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327648422878:android:6702f480c1ada9fef7cb4f",
+        "android_client_info": {
+          "package_name": "com.example.kakurogamelatestversion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIgnkDlMfP3-spo0fqIcM-DSGQk40B94Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
