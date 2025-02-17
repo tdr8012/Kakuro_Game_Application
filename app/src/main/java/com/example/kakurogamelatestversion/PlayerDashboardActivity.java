@@ -28,11 +28,11 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button gameRuleBtn = findViewById(R.id.gameRuleBtn);
         
         btnLogout.setOnClickListener(v -> logoutUser());
-        gameRuleBtn.setOnClickListener(v -> navigateToGaemRuleActivity());
+        gameRuleBtn.setOnClickListener(v -> navigateToGameRuleActivity());
     }
 
 
-    private void navigateToGaemRuleActivity() {
+    private void navigateToGameRuleActivity() {
         Intent intent = new Intent(PlayerDashboardActivity.this, GameRuleActivity.class);
         startActivity(intent);
         finish();
