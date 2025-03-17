@@ -42,11 +42,10 @@
         app:layout_constraintTop_toBottomOf="@id/topBarLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:columnCount="9"
-        app:rowCount="9">
+        android:columnCount="6"
+        android:rowCount="6">
         <!-- Cells will be added dynamically here -->
     </GridLayout>
-
     <LinearLayout
         android:id="@+id/numberPadLayout"
         android:layout_width="match_parent"
