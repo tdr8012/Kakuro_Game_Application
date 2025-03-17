@@ -1,8 +1,12 @@
 package com.example.kakurogamelatestversion;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -34,6 +38,10 @@ class Template {
         this.rowHints = new int[size][size]; // Initialize row hints
         this.colHints = new int[size][size]; // Initialize column hints
         initializeGrid();
+    }
+
+    public static Template getTemplateByUid(String gridUid) {
+        return null;
     }
 
     private void initializeGrid() {
@@ -91,7 +99,39 @@ class Template {
         }
         return false;
     }
+    public static void createLevels(String selectedDifficulty,Game game) {
+        List<Template> easyTemplates = Template.generateEasyTemplates(4, 5);
+        List<Template> mediumTemplates = Template.generateMediumTemplates(4, 5);
+        List<Template> hardTemplates = Template.generateHardTemplates(4, 5);
 
+        List<Template> selectedTemplates = null;
+        String levelDifficulty = null;
+
+        switch (selectedDifficulty.toLowerCase()) {
+            case "easy":
+                selectedTemplates = easyTemplates;
+                levelDifficulty = "easy";
+                break;
+            case "medium":
+                selectedTemplates = mediumTemplates;
+                levelDifficulty = "medium";
+                break;
+            case "hard":
+                selectedTemplates = hardTemplates;
+                levelDifficulty = "hard";
+                break;
+            default:
+                // Handle invalid difficulty
+                break;
+        }
+        if (selectedTemplates != null) {
+            for (int i = 0; i < 5; i++) {
+                Template template= selectedTemplates.get(i);
+                Level level = new Level(levelDifficulty, 4, game, template, i + 1);
+                template.saveToFirestore();
+            }
+        }
+    }
     private static Template generateEasyTemplate(int size) {
         Template template = new Template(size);
         if (!solveKakuro(template)) {
@@ -123,6 +163,21 @@ class Template {
     }
 
 
+    public void setGrid(int[] grid){
+        this.grid=grid;
+    }
+    public void setCellStates(Cell[] cellStates){
+        this.cellStates=cellStates;
+    }
+    public void setRowHints(int[][] rowHints){
+        this.rowHints=rowHints;
+    }
+    public void setColHints(int[][] colHints){
+        this.colHints=colHints;
+    }
+    public int[] getGrid(){
+        return grid;
+    }
     //Backtracking algorithm to solve the kakuro
     private static boolean solveKakuro(Template template) {
         for (int row = 0; row < template.size; row++) {
@@ -239,31 +294,6 @@ class Template {
         }
     }
 
-    public void loadTemplates(String difficulty) {
-        //Load different puzzles from the generated list
-        if(difficulty.equals("easy") && easyTemplates.isEmpty()){
-            generateEasyTemplates(4, 5);
-        }
-        if(difficulty.equals("medium") && mediumTemplates.isEmpty()){
-            generateMediumTemplates(5, 5);
-        }
-        if(difficulty.equals("hard") && hardTemplates.isEmpty()){
-            generateHardTemplates(5, 5);
-        }
-        if(difficulty.equals("easy")){
-            for(Template template : easyTemplates){
-                //TODO load template into the game
-            }
-        } else if (difficulty.equals("medium")){
-            for(Template template : mediumTemplates){
-                //TODO load template into the game
-            }
-        } else if (difficulty.equals("hard")){
-            for(Template template : hardTemplates){
-                //TODO load template into the game
-            }
-        }
-    }
 
     public void insertNumber(int row, int col, int number) {
         int index = row * size + col;
@@ -320,6 +350,28 @@ class Template {
         }
 
         return true;
+    }
+    public void saveToFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> templateData = new HashMap<>();
+        templateData.put("gridUid", this.gridUid);
+        templateData.put("size", this.size);
+        templateData.put("isSolved", this.isSolved);
+        templateData.put("grid", this.grid); // Assuming grid is an array of ints
+        templateData.put("cellStates", this.cellStates); // Assuming cellStates is an array of enums
+        templateData.put("rowHints", this.rowHints); // Assuming rowHints is a 2D array of ints
+        templateData.put("colHints", this.colHints); // Assuming colHints is a 2D array of ints
+
+        db.collection("templates")
+                .document(this.gridUid) // Use the gridUid as the document ID
+                .set(templateData)
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("Template successfully written!");
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error writing template: " + e);
+                });
     }
 
     public void displayMessage(String message) {
