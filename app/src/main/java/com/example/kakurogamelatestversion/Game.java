@@ -46,7 +46,6 @@ public class Game {
                     gameTimerSeconds++;
                     System.out.println("Time elapsed: " + gameTimerSeconds + " seconds");
                 }
-                // Update UI or perform other actions with gameTimerSeconds
             }
         }, 0, 1000); // Start immediately, repeat every 1000ms (1 second)
     }

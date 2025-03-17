@@ -56,7 +56,8 @@
             android:textColor="@android:color/white"
             android:background="@drawable/button_easy"
             android:elevation="6dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:onClick="onEasyButtonClicked"/>
 
         <!-- Medium Button -->
         <Button
@@ -68,7 +69,8 @@
             android:textColor="@android:color/white"
             android:background="@drawable/button_medium"
             android:elevation="6dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:onClick="onMediumButtonClicked"/>
 
         <!-- Hard Button -->
         <Button
@@ -80,7 +82,8 @@
             android:textColor="@android:color/white"
             android:background="@drawable/button_hard"
             android:elevation="6dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:onClick="onHardButtonClicked"/>
 
         <!-- Scoreboard Button -->
         <Button
@@ -126,7 +129,7 @@
         android:id="@+id/gameRuleBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="?"
+        android:text="'?'"
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:background="@drawable/rule_tutorial_button"

@@ -44,7 +44,7 @@ class Template {
     }
 
     // Method to generate multiple easy templates
-    public static void generateEasyTemplates(int size, int count) {
+    public static List<Template> generateEasyTemplates(int size, int count) {
         for (int i = 0; i < count; i++) {
             Template template = generateEasyTemplate(size);
             if (template != null && !isDuplicate(template, easyTemplates)) {
@@ -53,10 +53,11 @@ class Template {
                 i--; // Try again if template is null or a duplicate
             }
         }
+        return null;
     }
 
     // Method to generate multiple medium templates
-    public static void generateMediumTemplates(int size, int count) {
+    public static List<Template> generateMediumTemplates(int size, int count) {
         for (int i = 0; i < count; i++) {
             Template template = generateMediumTemplate(size);
             if (template != null && !isDuplicate(template, mediumTemplates)) {
@@ -65,9 +66,10 @@ class Template {
                 i--; // Try again if template is null or a duplicate
             }
         }
+        return null;
     }
     // Method to generate multiple hard templates
-    public static void generateHardTemplates(int size, int count) {
+    public static List<Template> generateHardTemplates(int size, int count) {
         for (int i = 0; i < count; i++) {
             Template template = generateHardTemplate(size);
             if (template != null && !isDuplicate(template, hardTemplates)) {
@@ -76,6 +78,7 @@ class Template {
                 i--; // Try again if template is null or a duplicate
             }
         }
+        return null;
     }
     //helper method to check for duplicates
     private static boolean isDuplicate(Template newTemplate, List<Template> templateList) {
