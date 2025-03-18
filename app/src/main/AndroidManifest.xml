@@ -30,7 +30,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Kakuro_App"
+            android:name=".Gameplay"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

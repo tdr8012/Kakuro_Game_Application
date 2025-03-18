@@ -1,5 +1,10 @@
 package com.example.kakurogamelatestversion;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -16,7 +21,7 @@ enum Cell {
     FIXED     // Predefined number (not editable)
 }
 
-class Template {
+class Template implements Parcelable {
     private String gridUid;
     private int size;
     private boolean isSolved;
@@ -354,23 +359,54 @@ class Template {
     public void saveToFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // Create a map to store template data
         Map<String, Object> templateData = new HashMap<>();
-        templateData.put("gridUid", this.gridUid);
-        templateData.put("size", this.size);
-        templateData.put("isSolved", this.isSolved);
-        templateData.put("grid", this.grid); // Assuming grid is an array of ints
-        templateData.put("cellStates", this.cellStates); // Assuming cellStates is an array of enums
-        templateData.put("rowHints", this.rowHints); // Assuming rowHints is a 2D array of ints
-        templateData.put("colHints", this.colHints); // Assuming colHints is a 2D array of ints
+        templateData.put("gridUid", gridUid);
+        templateData.put("size", size);
+        templateData.put("isSolved", isSolved);
 
+        // Convert grid, rowHints, colHints, and cellStates to lists (Firestore friendly)
+        List<Integer> gridList = new ArrayList<>();
+        for (int num : grid) {
+            gridList.add(num);
+        }
+        templateData.put("grid", gridList);
+
+        List<String> cellStatesList = new ArrayList<>();
+        for (Cell cell : cellStates) {
+            cellStatesList.add(cell.name());
+        }
+        templateData.put("cellStates", cellStatesList);
+
+        List<List<Integer>> rowHintsList = new ArrayList<>();
+        for (int[] row : rowHints) {
+            List<Integer> rowList = new ArrayList<>();
+            for (int num : row) {
+                rowList.add(num);
+            }
+            rowHintsList.add(rowList);
+        }
+        templateData.put("rowHints", rowHintsList);
+
+        List<List<Integer>> colHintsList = new ArrayList<>();
+        for (int[] col : colHints) {
+            List<Integer> colList = new ArrayList<>();
+            for (int num : col) {
+                colList.add(num);
+            }
+            colHintsList.add(colList);
+        }
+        templateData.put("colHints", colHintsList);
+
+        // Save to Firestore under "templates" collection with gridUid as document ID
         db.collection("templates")
-                .document(this.gridUid) // Use the gridUid as the document ID
+                .document(gridUid)
                 .set(templateData)
                 .addOnSuccessListener(aVoid -> {
-                    System.out.println("Template successfully written!");
+                    System.out.println("Template saved to Firestore: " + gridUid);
                 })
                 .addOnFailureListener(e -> {
-                    System.err.println("Error writing template: " + e);
+                    System.err.println("Error saving template: " + e.getMessage());
                 });
     }
 
@@ -385,6 +421,9 @@ class Template {
     public void setGridUid(String gridUid) {
         this.gridUid = gridUid;
     }
+    public int getSize() {
+        return size;
+    }
 
     public boolean isSolved() {
         return isSolved;
@@ -392,5 +431,15 @@ class Template {
 
     public void setSolved(boolean solved) {
         isSolved = solved;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
     }
 }

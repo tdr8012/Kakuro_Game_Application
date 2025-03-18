@@ -7,9 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
+
 
 public class Level {
     // Attributes
@@ -19,7 +23,7 @@ public class Level {
     private Template template; // A level has-a template associated
     private int levelNumber;
     private static List<Level> allLevels = new ArrayList<>(); // Store all levels
-    private static Context context; //to be able to create buttons
+    static Context context; //to be able to create buttons
 
     // Constructor
     public Level(String difficulty, int gridSize, Game game, Template template, int levelNumber) {
@@ -44,6 +48,7 @@ public class Level {
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
     }
+
     // Getters
     public String getDifficulty() {
         return this.difficulty;
@@ -61,7 +66,9 @@ public class Level {
         return this.template;
     }
 
-    public int getLevelNumber(){ return this.levelNumber;}
+    public int getLevelNumber() {
+        return this.levelNumber;
+    }
 
     // Find level by difficulty and level number
     public static Level getLevelByDifficultyAndNumber(String difficulty, int levelNumber) {
@@ -72,42 +79,47 @@ public class Level {
         }
         return null; // Level not found
     }
+
     //to create the levels
-    public static void createLevels(String selectedDifficulty,Game game) {
-        List<Template> easyTemplates = Template.generateEasyTemplates(4, 5);
-        List<Template> mediumTemplates = Template.generateMediumTemplates(4, 5);
-        List<Template> hardTemplates = Template.generateHardTemplates(4, 5);
+    public static void createLevels(String selectedDifficulty, Game game) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        List<Template> selectedTemplates = null;
-        String levelDifficulty = null;
+        // Fetch the templates based on difficulty from Firestore
+        db.collection("templates")
+                .whereEqualTo("difficulty", selectedDifficulty)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            List<Template> selectedTemplates = new ArrayList<>();
+                            for (DocumentSnapshot document : querySnapshot) {
+                                // Convert each document to a Template object
+                                Template template = document.toObject(Template.class);
+                                if (template != null) {
+                                    selectedTemplates.add(template);
+                                }
+                            }
+                            // Now that you have templates, create the levels
+                            createLevelsFromTemplates(selectedTemplates, selectedDifficulty, game);
+                        }
+                    } else {
+                        Log.w("Level", "Error getting documents.", task.getException());
+                    }
+                });
+    }
 
-        switch (selectedDifficulty.toLowerCase()) {
-            case "easy":
-                selectedTemplates = easyTemplates;
-                levelDifficulty = "easy";
-                break;
-            case "medium":
-                selectedTemplates = mediumTemplates;
-                levelDifficulty = "medium";
-                break;
-            case "hard":
-                selectedTemplates = hardTemplates;
-                levelDifficulty = "hard";
-                break;
-            default:
-                // Handle invalid difficulty
-                break;
-        }
-        if (selectedTemplates != null) {
-            for (int i = 0; i < 5; i++) {
-                Level level = new Level(levelDifficulty, 4, game, selectedTemplates.get(i), i + 1);
-            }
+    private static void createLevelsFromTemplates(List<Template> templates, String difficulty, Game game) {
+        // Assuming there are exactly 5 templates for each difficulty
+        for (int i = 0; i < templates.size(); i++) {
+            Level level = new Level(difficulty, 4, game, templates.get(i), i + 1);
         }
     }
 
-    public static void setContext(Context c){
-        context=c;
+    public static void setContext(Context c) {
+        context = c;
     }
+
     // Create and display numbered buttons
     public static void displayLevelButtons(String selectedDifficulty) {
         LinearLayout layout = ((android.app.Activity) context).findViewById(R.id.levelButtonsLayout);
@@ -122,7 +134,7 @@ public class Level {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             params.setMargins(10, 10, 10, 10); // Add margins
-            params.gravity= Gravity.CENTER;
+            params.gravity = Gravity.CENTER;
             button.setLayoutParams(params);
 
             final int levelNumber = i; // Capture the value of i
@@ -138,15 +150,29 @@ public class Level {
     }
 
     private static void onLevelButtonClicked(String selectedDifficulty, int levelNumber) {
-        // Get the selected Level
-        Level selectedLevel = Level.getLevelByDifficultyAndNumber(selectedDifficulty, levelNumber);
-        if(selectedLevel == null){
-            Toast.makeText(context, "Level does not exist", Toast.LENGTH_SHORT).show();
-        } else {
-            Intent intent = new Intent(context, Kakuro_App.class);
-            intent.putExtra("gridUid", selectedLevel.getTemplate().getGridUid());
-            intent.putExtra("difficulty", selectedLevel.getDifficulty());
-            context.startActivity(intent);
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("levels")
+                .whereEqualTo("difficulty", selectedDifficulty)
+                .whereEqualTo("levelNumber", levelNumber)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                            Level selectedLevel = document.toObject(Level.class);
+                            if (selectedLevel != null) {
+                                Intent intent = new Intent(context, Gameplay.class);
+                                intent.putExtra("template", selectedLevel.getTemplate());
+                                intent.putExtra("difficulty", selectedLevel.getDifficulty());
+                                context.startActivity(intent);
+                            }
+                        } else {
+                            Toast.makeText(context, "Level does not exist", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "Error fetching level", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
