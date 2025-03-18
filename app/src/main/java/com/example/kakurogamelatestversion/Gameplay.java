@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Gameplay extends AppCompatActivity {
 
     private Game game;
@@ -26,6 +29,13 @@ public class Gameplay extends AppCompatActivity {
     private Button dashboardButton;
     private CountDownTimer countDownTimer;
     private boolean isGameOver = false;
+    private String gridUid;
+    private int size;
+    private boolean isSolved;
+    private int[][] colHints;
+    private int[][] rowHints;
+    private Cell[] cellStates;
+    private int[] grid;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,36 +53,114 @@ public class Gameplay extends AppCompatActivity {
         // Get data passed from Level
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String gridUid = extras.getString("gridUid");
+            this.gridUid = extras.getString("gridUid");
             difficulty = extras.getString("difficulty");
             // Now you can use gridUid and difficulty to load the game
             loadTemplateFromFirestore(gridUid);
         }
     }
 
-    private void loadTemplateFromFirestore(String gridUid) {
-        db.collection("templates")
-                .document(gridUid)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Convert the Firestore data to a Template object
-                            template = convertDocumentToTemplate(document);
+    public void loadTemplateFromFirestore(String templateId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        System.out.println("loadTemplateFromFirestore() called with templateId: " + templateId);
 
-                            // Start the game now that the template is loaded
-                            startGame();
+        db.collection("templates")
+                .document(templateId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        System.out.println("Template document found in Firestore!");
+
+                        // GridUid
+                        this.gridUid = documentSnapshot.getString("gridUid");
+                        System.out.println("gridUid: " + gridUid);
+
+                        // Size
+                        Long sizeLong = documentSnapshot.getLong("size");
+                        if (sizeLong != null) {
+                            this.size = sizeLong.intValue();
+                            System.out.println("size: " + size);
                         } else {
-                            // Handle the case where the document doesn't exist
-                            Toast.makeText(this, "Template not found", Toast.LENGTH_SHORT).show();
+                            System.err.println("Error: size is null in Firestore!");
                         }
+
+                        // isSolved
+                        Boolean isSolvedBool = documentSnapshot.getBoolean("isSolved");
+                        this.isSolved = isSolvedBool != null && isSolvedBool;
+                        System.out.println("isSolved: " + isSolved);
+
+                        // Grid
+                        List<Long> gridList = (List<Long>) documentSnapshot.get("grid");
+                        if (gridList != null) {
+                            this.grid = new int[gridList.size()];
+                            for (int i = 0; i < gridList.size(); i++) {
+                                this.grid[i] = gridList.get(i).intValue();
+                            }
+                            System.out.println("grid: " + Arrays.toString(grid));
+                        } else {
+                            System.err.println("Error: grid is null in Firestore!");
+                        }
+
+                        // CellStates
+                        List<String> cellStatesStringList = (List<String>) documentSnapshot.get("cellStates");
+                        if (cellStatesStringList != null) {
+                            this.cellStates = new Cell[cellStatesStringList.size()];
+                            for (int i = 0; i < cellStatesStringList.size(); i++) {
+                                try {
+                                    this.cellStates[i] = Cell.valueOf(cellStatesStringList.get(i));
+                                } catch (IllegalArgumentException | NullPointerException e) {
+                                    System.err.println("Error parsing cellState at index " + i + ": " + e.getMessage());
+                                    cellStates[i] = Cell.EMPTY; // fallback
+                                }
+                            }
+                            System.out.println("cellStates loaded.");
+                        } else {
+                            System.err.println("Error: cellStates is null in Firestore!");
+                        }
+
+                        // RowHints
+                        List<List<Long>> rowHintsList = (List<List<Long>>) documentSnapshot.get("rowHints");
+                        if (rowHintsList != null) {
+                            this.rowHints = new int[rowHintsList.size()][];
+                            for (int i = 0; i < rowHintsList.size(); i++) {
+                                List<Long> row = rowHintsList.get(i);
+                                rowHints[i] = new int[row.size()];
+                                for (int j = 0; j < row.size(); j++) {
+                                    rowHints[i][j] = row.get(j).intValue();
+                                }
+                            }
+                            System.out.println("rowHints loaded.");
+                        } else {
+                            System.err.println("Error: rowHints is null in Firestore!");
+                        }
+
+                        // ColHints
+                        List<List<Long>> colHintsList = (List<List<Long>>) documentSnapshot.get("colHints");
+                        if (colHintsList != null) {
+                            this.colHints = new int[colHintsList.size()][];
+                            for (int i = 0; i < colHintsList.size(); i++) {
+                                List<Long> col = colHintsList.get(i);
+                                colHints[i] = new int[col.size()];
+                                for (int j = 0; j < col.size(); j++) {
+                                    colHints[i][j] = col.get(j).intValue();
+                                }
+                            }
+                            System.out.println("colHints loaded.");
+                        } else {
+                            System.err.println("Error: colHints is null in Firestore!");
+                        }
+
+                        System.out.println("Template loaded successfully!");
+
                     } else {
-                        // Handle errors
-                        Toast.makeText(this, "Failed to load template", Toast.LENGTH_SHORT).show();
+                        System.err.println("Template with ID " + templateId + " does NOT exist!");
                     }
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error loading template: " + e.getMessage());
                 });
     }
+
 
     private Template convertDocumentToTemplate(DocumentSnapshot document) {
         Template template = new Template(document.getLong("size").intValue());

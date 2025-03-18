@@ -45,6 +45,25 @@ class Template implements Parcelable {
         initializeGrid();
     }
 
+    protected Template(Parcel in) {
+        gridUid = in.readString();
+        size = in.readInt();
+        isSolved = in.readByte() != 0;
+        grid = in.createIntArray();
+    }
+
+    public static final Creator<Template> CREATOR = new Creator<Template>() {
+        @Override
+        public Template createFromParcel(Parcel in) {
+            return new Template(in);
+        }
+
+        @Override
+        public Template[] newArray(int size) {
+            return new Template[size];
+        }
+    };
+
     public static Template getTemplateByUid(String gridUid) {
         return null;
     }
@@ -356,28 +375,40 @@ class Template implements Parcelable {
 
         return true;
     }
+
     public void saveToFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        System.out.println("saveToFirestore() called");
 
-        // Create a map to store template data
+        if (gridUid == null || gridUid.isEmpty()) {
+            System.err.println("Error: gridUid is null or empty!");
+            return;
+        }
+
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("gridUid", gridUid);
         templateData.put("size", size);
         templateData.put("isSolved", isSolved);
 
-        // Convert grid, rowHints, colHints, and cellStates to lists (Firestore friendly)
+        // Grid conversion
         List<Integer> gridList = new ArrayList<>();
         for (int num : grid) {
             gridList.add(num);
         }
         templateData.put("grid", gridList);
 
+        // CellStates conversion
         List<String> cellStatesList = new ArrayList<>();
         for (Cell cell : cellStates) {
-            cellStatesList.add(cell.name());
+            if (cell != null) {
+                cellStatesList.add(cell.name());
+            } else {
+                cellStatesList.add("EMPTY");
+            }
         }
         templateData.put("cellStates", cellStatesList);
 
+        // RowHints conversion
         List<List<Integer>> rowHintsList = new ArrayList<>();
         for (int[] row : rowHints) {
             List<Integer> rowList = new ArrayList<>();
@@ -388,6 +419,7 @@ class Template implements Parcelable {
         }
         templateData.put("rowHints", rowHintsList);
 
+        // ColHints conversion
         List<List<Integer>> colHintsList = new ArrayList<>();
         for (int[] col : colHints) {
             List<Integer> colList = new ArrayList<>();
@@ -398,7 +430,8 @@ class Template implements Parcelable {
         }
         templateData.put("colHints", colHintsList);
 
-        // Save to Firestore under "templates" collection with gridUid as document ID
+        System.out.println("Template Data: " + templateData);
+
         db.collection("templates")
                 .document(gridUid)
                 .set(templateData)
@@ -409,6 +442,7 @@ class Template implements Parcelable {
                     System.err.println("Error saving template: " + e.getMessage());
                 });
     }
+
 
     public void displayMessage(String message) {
         System.out.println(message);
@@ -440,6 +474,9 @@ class Template implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-
+        dest.writeString(gridUid);
+        dest.writeInt(size);
+        dest.writeByte((byte) (isSolved ? 1 : 0));
+        dest.writeIntArray(grid);
     }
 }
