@@ -1,10 +1,13 @@
 <resources>
-    <style name="RoundedButton">
-        <item name="android:layout_width">260dp</item>
-        <item name="android:layout_height">60dp</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:elevation">6dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
+    <style name="DetailLabel">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#888888</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
+
+    <style name="DetailValue">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.kakurogamelatestversion;
+package com.example.kakurogamelatestversion.Player;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kakurogamelatestversion.R;
 
 public class GameRuleActivity extends AppCompatActivity {
 

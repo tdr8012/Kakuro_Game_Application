@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/formContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <!-- Time Limit Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/timeLimitInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/time_limit_hint"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/error_red"
+            app:hintTextColor="?attr/colorOnSurface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/timeLimitInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:importantForAccessibility="yes"
+                android:contentDescription="@string/time_limit_content_desc"
+                android:hint="@string/default_time_limit"
+                tools:text="5"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveBtn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/save_settings"
+            app:icon="@drawable/ic_save"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@android:color/white"/>
+    </LinearLayout>
+
+</LinearLayout>

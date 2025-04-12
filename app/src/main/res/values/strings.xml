@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">KakuroGameApp</string>
+
+    <string name="admin_dashboard_title">Admin Dashboard</string>
+
+    <string name="view_players">VIEW PLAYERS 📋</string>
+
+    <string name="edit_player">EDIT PLAYER ✏️</string>
+
+    <string name="reset_score">RESET SCORE 🔄️</string>
+
+    <string name="reset_level">RESET LEVELS 🧩</string>
+
+    <string name="delete_player">DELETE PLAYER ❌</string>
+
+    <string name="admin_logout">LOG OUT 🚪</string>
+
+    <string name="game_timer_challenge">GAME TIMER CHALLENGE ⏱️</string>
+
+
+    <string name="time_limit_hint">Time limit</string>
+    <string name="time_limit_hint_with_range">Time limit (%1$d-%2$d minutes)</string>
+    <string name="default_time_limit">5</string>
+    <string name="time_limit_content_desc">Enter game time limit between 1 and 30 minutes</string>
+    <string name="save_settings">Save Settings</string>
+
+    <!-- Error Messages -->
+    <string name="error_time_required">Please enter time limit</string>
+    <string name="error_time_range">Must be between %1$d and %2$d minutes</string>
+    <string name="error_invalid_number">Please enter valid number</string>
+    <string name="settings_saved_success">Timer settings saved!</string>
+    <string name="settings_save_error">Error saving settings: %1$s</string>
+    <string name="title_activity_player_detai">PlayerDetaiActivity</string>
 </resources>

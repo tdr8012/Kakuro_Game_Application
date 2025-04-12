@@ -1,4 +1,4 @@
-package com.example.kakurogamelatestversion;
+package com.example.kakurogamelatestversion.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kakurogamelatestversion.Player.PlayerDashboardActivity;
+import com.example.kakurogamelatestversion.R;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

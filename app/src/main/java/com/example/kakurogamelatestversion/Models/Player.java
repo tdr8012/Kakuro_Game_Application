@@ -1,34 +1,21 @@
-package com.example.kakurogamelatestversion;
+package com.example.kakurogamelatestversion.Models;
 
 import com.google.firebase.Timestamp;
 
 public class Player {
-    public String uid;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String phoneNumber;
-    public Timestamp createdAt;
-    public String imgUrl;
-    public Integer score;
-    public String role;
+    private String uid;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private Timestamp createdAt;
+    private String imgUrl;
+    private Integer score;
+    private String role;
 
     public Player() {}
 
-    public Player(String uid, String firstName, String lastName, String email,
-                  String phoneNumber, Timestamp createdAt, String imgUrl, Integer score, String role) {
-        this.uid = uid;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.createdAt = createdAt;
-        this.imgUrl = imgUrl;
-        this.score = score;
-        this.role = role;
-    }
-
-    // Getters and Setters
+    // Getters and setters...
     public String getUid() { return uid; }
     public void setUid(String uid) { this.uid = uid; }
 

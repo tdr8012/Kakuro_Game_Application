@@ -9,18 +9,25 @@
     <color name="cyan">#7CE0E6</color>
 
     <!-- Primary Theme Colors -->
-    <color name="colorPrimary">#FF000000</color>  <!-- Black -->
-    <color name="colorPrimaryVariant">#1A1A1A</color>  <!-- Darker Black -->
-    <color name="colorOnPrimary">#FFFFFFFF</color>  <!-- White Text on Black -->
+    <color name="colorPrimary">#FF000000</color>
+    <color name="colorPrimaryVariant">#1A1A1A</color>
+    <color name="colorOnPrimary">#FFFFFFFF</color>
 
-    <color name="colorAccent">#3659E3</color>  <!-- Blue Accent -->
-    <color name="colorOnAccent">#FFFFFF</color>  <!-- White Text on Blue -->
+    <color name="colorAccent">#3659E3</color>
+    <color name="colorOnAccent">#FFFFFF</color>
 
     <!-- Button Colors -->
-    <color name="colorEasy">#4CAF50</color>  <!-- Green for Easy -->
-    <color name="colorMedium">#FFC107</color>  <!-- Yellow for Medium -->
-    <color name="colorHard">#F44336</color>  <!-- Red for Hard -->
-    <color name="colorGold">#FFD700</color>  <!-- Gold for Scoreboard -->
-    <color name="colorBlue">#2196F3</color>  <!-- Blue for Profile -->
-    <color name="colorRedDark">#B71C1C</color>  <!-- Dark Red for Logout -->
+    <color name="colorEasy">#4CAF50</color>
+    <color name="colorMedium">#FFC107</color>
+    <color name="colorHard">#F44336</color>
+    <color name="colorGold">#FFD700</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorRedDark">#B71C1C</color>
+    <color name="error_color">#F44336</color>
+
+    <color name="cardBorderColor">#E0E0E0</color>
+    <color name="roleBackgroundColor">#F5F5F5</color>
+    <color name="roleBorderColor">#BDBDBD</color>
+    <color name="error_red">#FF0000</color>
+
 </resources>

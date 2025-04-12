@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/editPlayerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Player"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <!-- Player Name Input -->
+    <TextView
+        android:id="@+id/playerNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player Name"
+        android:textSize="18sp"
+        android:layout_below="@id/editPlayerTitle"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/playerNameInput"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/playerNameLabel"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter name"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Player Email Input -->
+    <TextView
+        android:id="@+id/playerEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player Email"
+        android:textSize="18sp"
+        android:layout_below="@id/playerNameInput"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/playerEmailInput"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/playerEmailLabel"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter email"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/savePlayerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Changes"
+        android:textSize="18sp"
+        android:layout_below="@id/playerEmailInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>

@@ -5,34 +5,61 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:forceDarkAllowed="false"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KakuroGameLatestVersion"
-        android:forceDarkAllowed="false"
-        tools:targetApi="31" >
-
-
+        tools:targetApi="31">
         <activity
-            android:name=".GameRuleActivity"
+            android:name=".Admin.ViewPlayersActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Admin.PlayerDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayerDashboardActivity"
+            android:name=".ui.theme.PlayerDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".PlayerDetaiActivity"
+            android:exported="false"
+            android:label="@string/title_activity_player_detai"
+            android:theme="@style/Theme.KakuroGameLatestVersion" />
+        <activity
+            android:name=".Adapter.PlayerAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.DeletePlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.EditPlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Player.GameTimerChallengeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Player.GameRuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Utils.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Player.PlayerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Utils.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:exported="true" >
+            android:name=".Utils.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

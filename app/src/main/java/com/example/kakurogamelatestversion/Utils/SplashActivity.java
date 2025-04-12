@@ -1,10 +1,12 @@
-package com.example.kakurogamelatestversion;
+package com.example.kakurogamelatestversion.Utils;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kakurogamelatestversion.R;
 
 public class SplashActivity extends AppCompatActivity {
 

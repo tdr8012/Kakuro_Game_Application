@@ -1,4 +1,4 @@
-package com.example.kakurogamelatestversion;
+package com.example.kakurogamelatestversion.Player;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kakurogamelatestversion.R;
+import com.example.kakurogamelatestversion.Utils.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PlayerDashboardActivity extends AppCompatActivity {
