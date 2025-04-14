@@ -23,9 +23,6 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         game = new Game();
         Level.setContext(this);
 
-        Template.generateEasyTemplates(4, 5);
-        Template.generateMediumTemplates(4, 5);
-        Template.generateHardTemplates(4, 5);
 
         Button btnEasy = findViewById(R.id.easyBtn);
         Button btnMedium = findViewById(R.id.mediumBtn);

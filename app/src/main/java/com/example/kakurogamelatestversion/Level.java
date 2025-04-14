@@ -3,17 +3,15 @@ package com.example.kakurogamelatestversion;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
-
 
 public class Level {
     // Attributes
@@ -23,7 +21,7 @@ public class Level {
     private Template template; // A level has-a template associated
     private int levelNumber;
     private static List<Level> allLevels = new ArrayList<>(); // Store all levels
-    static Context context; //to be able to create buttons
+    static Context context; // to be able to create buttons
 
     // Constructor
     public Level(String difficulty, int gridSize, Game game, Template template, int levelNumber) {
@@ -62,8 +60,8 @@ public class Level {
         return this.game;
     }
 
-    public Template getTemplate() {
-        return this.template;
+    public boolean getTemplate() {
+        return this.template.isSolved();
     }
 
     public int getLevelNumber() {
@@ -80,7 +78,7 @@ public class Level {
         return null; // Level not found
     }
 
-    //to create the levels
+    // Create levels using templates from Firestore
     public static void createLevels(String selectedDifficulty, Game game) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -100,7 +98,7 @@ public class Level {
                                     selectedTemplates.add(template);
                                 }
                             }
-                            // Now that you have templates, create the levels
+                            // Create levels from the templates
                             createLevelsFromTemplates(selectedTemplates, selectedDifficulty, game);
                         }
                     } else {
@@ -109,10 +107,12 @@ public class Level {
                 });
     }
 
+    // Create levels from the templates
     private static void createLevelsFromTemplates(List<Template> templates, String difficulty, Game game) {
-        // Assuming there are exactly 5 templates for each difficulty
         for (int i = 0; i < templates.size(); i++) {
-            Level level = new Level(difficulty, 4, game, templates.get(i), i + 1);
+            Template template = templates.get(i);
+            int gridSize = template.getGrid().length; // Get grid size from the template
+            Level level = new Level(difficulty, gridSize, game, template, i + 1);
         }
     }
 
@@ -125,10 +125,13 @@ public class Level {
         LinearLayout layout = ((android.app.Activity) context).findViewById(R.id.levelButtonsLayout);
         layout.removeAllViews(); // Clear existing buttons if any
 
-        for (int i = 1; i <= 5; i++) {
+        // Fetch levels based on selected difficulty
+        List<Level> levels = getLevelsByDifficulty(selectedDifficulty);
+
+        for (Level level : levels) {
             Button button = new Button(context);
-            button.setText(String.valueOf(i));
-            button.setId(i);
+            button.setText(String.valueOf(level.getLevelNumber()));
+            button.setId(level.getLevelNumber());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -137,42 +140,28 @@ public class Level {
             params.gravity = Gravity.CENTER;
             button.setLayoutParams(params);
 
-            final int levelNumber = i; // Capture the value of i
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onLevelButtonClicked(selectedDifficulty, levelNumber);
-                }
-            });
+            button.setOnClickListener(v -> onLevelButtonClicked(level));
 
             layout.addView(button);
         }
     }
 
-    private static void onLevelButtonClicked(String selectedDifficulty, int levelNumber) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("levels")
-                .whereEqualTo("difficulty", selectedDifficulty)
-                .whereEqualTo("levelNumber", levelNumber)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-                            Level selectedLevel = document.toObject(Level.class);
-                            if (selectedLevel != null) {
-                                Intent intent = new Intent(context, Gameplay.class);
-                                intent.putExtra("template", selectedLevel.getTemplate());
-                                intent.putExtra("difficulty", selectedLevel.getDifficulty());
-                                context.startActivity(intent);
-                            }
-                        } else {
-                            Toast.makeText(context, "Level does not exist", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(context, "Error fetching level", Toast.LENGTH_SHORT).show();
-                    }
-                });
+    // Fetch levels by difficulty
+    public static List<Level> getLevelsByDifficulty(String difficulty) {
+        List<Level> levels = new ArrayList<>();
+        for (Level level : allLevels) {
+            if (level.getDifficulty().equalsIgnoreCase(difficulty)) {
+                levels.add(level);
+            }
+        }
+        return levels;
+    }
+
+    // Handle level button click
+    private static void onLevelButtonClicked(Level level) {
+        Intent intent = new Intent(context, Gameplay.class);
+        intent.putExtra("template", level.getTemplate());
+        intent.putExtra("difficulty", level.getDifficulty());
+        context.startActivity(intent);
     }
 }

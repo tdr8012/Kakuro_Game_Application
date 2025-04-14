@@ -1,17 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/intro_background"
-    android:gravity="center"
-    tools:context=".Level">
+    android:background="@drawable/intro_background">
 
-    <LinearLayout
-        android:id="@+id/levelButtonsLayout"
+    <!-- Title TextView to display difficulty -->
+    <TextView
+        android:id="@+id/difficultyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Select Level"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <!-- Container for level buttons -->
+    <LinearLayout
+        android:id="@+id/levelButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/difficultyTitle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="80dp"> <!-- Added margin to separate from the title -->
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 1"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 2"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 3"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 4"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 5"
+            android:layout_marginBottom="8dp"/>
     </LinearLayout>
+
 </RelativeLayout>

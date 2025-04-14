@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,8 +45,8 @@ public class Gameplay extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         game = new Game(); // Initialize the game object
 
-       // messageTextView = findViewById(R.id.messageTextView); // TextView for displaying the message
-       // dashboardButton = findViewById(R.id.dashboardButton); // Button to redirect to the dashboard
+        messageTextView = findViewById(R.id.messageTextView); // TextView for displaying the message
+        dashboardButton = findViewById(R.id.dashboardButton); // Button to redirect to the dashboard
         dashboardButton.setVisibility(View.INVISIBLE); // Initially hidden
 
         // Get data passed from Level
@@ -152,6 +151,9 @@ public class Gameplay extends AppCompatActivity {
 
                         System.out.println("Template loaded successfully!");
 
+                        // Start the game after loading the template
+                        startGame();
+
                     } else {
                         System.err.println("Template with ID " + templateId + " does NOT exist!");
                     }
@@ -159,59 +161,6 @@ public class Gameplay extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     System.err.println("Error loading template: " + e.getMessage());
                 });
-    }
-
-
-    private Template convertDocumentToTemplate(DocumentSnapshot document) {
-        Template template = new Template(document.getLong("size").intValue());
-        template.setGridUid(document.getString("gridUid"));
-        template.setSolved(Boolean.TRUE.equals(document.getBoolean("isSolved")));
-
-        // Load the grid
-        java.util.List<Long> gridLongList = (java.util.List<Long>) document.get("grid");
-        assert gridLongList != null;
-        int[] grid = new int[gridLongList.size()];
-        for (int i = 0; i < gridLongList.size(); i++) {
-            grid[i] = gridLongList.get(i).intValue();
-        }
-        template.setGrid(grid);
-
-        // Load the cellStates
-        java.util.List<String> cellStatesStringList = (java.util.List<String>) document.get("cellStates");
-        assert cellStatesStringList != null;
-        Cell[] cellStates = new Cell[cellStatesStringList.size()];
-        for (int i = 0; i < cellStatesStringList.size(); i++) {
-            cellStates[i] = Cell.valueOf(cellStatesStringList.get(i));
-        }
-        template.setCellStates(cellStates);
-
-        // Load rowHints
-        java.util.List<java.util.List<Long>> rowHintsLongList = (java.util.List<java.util.List<Long>>) document.get("rowHints");
-        assert rowHintsLongList != null;
-        int[][] rowHints = new int[rowHintsLongList.size()][];
-        for (int i = 0; i < rowHintsLongList.size(); i++) {
-            java.util.List<Long> rowHint = rowHintsLongList.get(i);
-            rowHints[i] = new int[rowHint.size()];
-            for (int j = 0; j < rowHint.size(); j++) {
-                rowHints[i][j] = rowHint.get(j).intValue();
-            }
-        }
-        template.setRowHints(rowHints);
-
-        // Load colHints
-        java.util.List<java.util.List<Long>> colHintsLongList = (java.util.List<java.util.List<Long>>) document.get("colHints");
-        assert colHintsLongList != null;
-        int[][] colHints = new int[colHintsLongList.size()][];
-        for (int i = 0; i < colHintsLongList.size(); i++) {
-            java.util.List<Long> colHint = colHintsLongList.get(i);
-            colHints[i] = new int[colHint.size()];
-            for (int j = 0; j < colHint.size(); j++) {
-                colHints[i][j] = colHint.get(j).intValue();
-            }
-        }
-        template.setColHints(colHints);
-
-        return template;
     }
 
     public void startGame() {
@@ -241,7 +190,7 @@ public class Gameplay extends AppCompatActivity {
         }
 
         // Initialize the grid
-        int[] grid = template.getGrid();
+        String[][] grid = template.getGrid();
         GridLayout gridLayout = findViewById(R.id.kakuroGridLayout);
         gridLayout.setColumnCount(template.getSize()); // Set the correct column count
         gridLayout.setRowCount(template.getSize()); // Set the correct row count
@@ -340,4 +289,6 @@ public class Gameplay extends AppCompatActivity {
         Intent intent = new Intent(this, PlayerDashboardActivity.class);
         startActivity(intent);
     }
+
+
 }

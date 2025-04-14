@@ -45,6 +45,14 @@
         android:text="Email"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp" />
+    <!-- Player Email -->
+    <TextView
+        android:id="@+id/playerPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp" />
 
     <!-- Player Score -->
     <TextView
