@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@drawable/intro_background">
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:hint="Enter player's email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset Score 🔄"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_logout"
+        android:elevation="8dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/backToAdminBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_easy"
+        android:elevation="8dp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

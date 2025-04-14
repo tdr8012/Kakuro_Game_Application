@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         db.collection("admins").document(uid).get().addOnSuccessListener(document -> {
             if (!document.exists()) {
                 db.collection("admins").document(uid)
-                        .set(new Admin(uid, "admin@gmail.com"))
+                        .set(new Admin(uid, "admin@gmail.com", "admin"))
                         .addOnSuccessListener(aVoid -> Log.d("Firestore", "Admin saved"))
                         .addOnFailureListener(e -> Log.e("Firestore", "Error saving admin", e));
             }

@@ -17,6 +17,11 @@
 
     <string name="game_timer_challenge">GAME TIMER CHALLENGE ⏱️</string>
 
+    <string name="add_game_template">ADD GAME TEMPLATE ➕</string>
+
+    <string name="reset_player">RESET PLAYER 🔄</string>
+
+
 
     <string name="time_limit_hint">Time limit</string>
     <string name="time_limit_hint_with_range">Time limit (%1$d-%2$d minutes)</string>

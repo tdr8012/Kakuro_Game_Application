@@ -56,6 +56,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
         deletePlayerBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, DeletePlayerActivity.class)));
 
+        Button resetPlayerBtn = findViewById(R.id.resetPlayerBtn);
+        resetPlayerBtn.setOnClickListener(v -> startActivity(new Intent(this, ResetPlayerActivity.class)));
+
+        Button addGameTemplateBtn = findViewById(R.id.addGameTemplateBtn);
+        addGameTemplateBtn.setOnClickListener(v ->
+                startActivity(new Intent(this, AddGameTemplateActivity.class)));
+
+
+
         gameTimerChallengeBtn.setOnClickListener(v -> {
             Toast.makeText(this, "Game Timer Challenge", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, GameTimerChallengeActivity.class));

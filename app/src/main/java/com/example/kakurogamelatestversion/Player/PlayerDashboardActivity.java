@@ -28,11 +28,19 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         Button btnHard = findViewById(R.id.hardBtn);
         Button btnLogout = findViewById(R.id.logoutBtn);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button gameRuleBtn = findViewById(R.id.gameRuleBtn);
-        
+        Button gameTimerChallengeBtn = findViewById(R.id.gameTimerChallengeBtn);
+
         btnLogout.setOnClickListener(v -> logoutUser());
         gameRuleBtn.setOnClickListener(v -> navigateToGameRuleActivity());
+
+        gameTimerChallengeBtn.setOnClickListener(v -> navigateToGameTimerChallengeActivity());
     }
 
+    private void navigateToGameTimerChallengeActivity() {
+
+        Intent intent = new Intent(PlayerDashboardActivity.this, GameTimerChallengeActivity.class);
+        startActivity(intent);
+    }
 
     private void navigateToGameRuleActivity() {
         Intent intent = new Intent(PlayerDashboardActivity.this, GameRuleActivity.class);
