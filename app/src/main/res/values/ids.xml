@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="playerProfileLayout" type="id" />
+    <item name="profileImageView" type="id" />
+    <item name="playerNameTextView" type="id" />
+    <item name="playerEmailTextView" type="id" />
+    <item name="playerScoreTextView" type="id" />
+</resources>

@@ -30,6 +30,9 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".PlayerProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Gameplay"
             android:exported="false" />
         <activity

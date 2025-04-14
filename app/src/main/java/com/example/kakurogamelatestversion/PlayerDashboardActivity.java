@@ -21,7 +21,8 @@ public class PlayerDashboardActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         game = new Game();
-        Level.setContext(this); // Pass the context to Level class
+        Level.setContext(this);
+
         Template.generateEasyTemplates(4, 5);
         Template.generateMediumTemplates(4, 5);
         Template.generateHardTemplates(4, 5);
@@ -30,12 +31,14 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         Button btnMedium = findViewById(R.id.mediumBtn);
         Button btnHard = findViewById(R.id.hardBtn);
         Button btnLogout = findViewById(R.id.logoutBtn);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         Button gameRuleBtn = findViewById(R.id.gameRuleBtn);
+        Button btnProfile = findViewById(R.id.profileBtn);
 
         btnLogout.setOnClickListener(v -> logoutUser());
         gameRuleBtn.setOnClickListener(v -> navigateToGameRuleActivity());
+        btnProfile.setOnClickListener(v -> navigateToProfileActivity()); 
     }
+
 
     public void onEasyButtonClicked(View view) {
         startLevelDisplayActivity("easy");
@@ -59,6 +62,10 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(PlayerDashboardActivity.this, GameRuleActivity.class);
         startActivity(intent);
         finish();
+    }
+    private void navigateToProfileActivity() {
+        Intent intent = new Intent(PlayerDashboardActivity.this, PlayerProfileActivity.class);
+        startActivity(intent);
     }
 
     private void logoutUser() {
