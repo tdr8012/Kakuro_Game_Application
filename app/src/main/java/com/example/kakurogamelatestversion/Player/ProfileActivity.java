@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.kakurogamelatestversion.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,13 +30,11 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_detail); // Reuse the same layout
+        setContentView(R.layout.activity_player_detail);
 
-        // Init Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Init UI
         txtName = findViewById(R.id.txtName);
         txtEmail = findViewById(R.id.txtEmail);
         txtPhone = findViewById(R.id.txtPhone);
@@ -46,21 +45,14 @@ public class ProfileActivity extends AppCompatActivity {
         imageProfile = findViewById(R.id.imageProfile);
         goBackBtn = findViewById(R.id.goBackBtn);
 
-        // Back Button
         goBackBtn.setOnClickListener(v -> finish());
 
-        // Load user profile
         loadUserProfile();
     }
 
     private void loadUserProfile() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            displayGuestMessage();
-            return;
-        }
-
-        if (user.isAnonymous()) {
+        if (user == null || user.isAnonymous()) {
             displayGuestMessage();
             return;
         }
@@ -74,15 +66,13 @@ public class ProfileActivity extends AppCompatActivity {
                 String phone = documentSnapshot.getString("phoneNumber");
                 String imgUrl = documentSnapshot.getString("imgUrl");
                 String role = documentSnapshot.getString("role");
-                long createdAt = documentSnapshot.getLong("createdAt") != null ? documentSnapshot.getLong("createdAt") : -1L;
+                Timestamp timestamp = documentSnapshot.getTimestamp("createdAt");
                 int score = documentSnapshot.getLong("score") != null ? documentSnapshot.getLong("score").intValue() : 0;
 
-                // Format date
-                String createdDate = createdAt != -1
-                        ? new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date(createdAt))
+                String createdDate = timestamp != null
+                        ? new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(timestamp.toDate())
                         : "N/A";
 
-                // Set UI
                 txtName.setText(firstName + " " + lastName);
                 txtEmail.setText(email);
                 txtPhone.setText(phone);
@@ -97,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
                     imageProfile.setImageResource(R.drawable.ic_profile_placeholder);
                 }
             } else {
-                displayGuestMessage(); // fallback
+                displayGuestMessage();
             }
         }).addOnFailureListener(e -> displayGuestMessage());
     }
