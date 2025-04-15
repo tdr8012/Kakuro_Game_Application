@@ -1,63 +1,71 @@
 package com.example.kakurogamelatestversion.Admin;
 
 import android.os.Bundle;
-
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import com.example.kakurogamelatestversion.R;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResetPlayerActivity extends AppCompatActivity {
 
-    private EditText emailInput;
-    private Button resetBtn;
     private FirebaseFirestore db;
-    private Button backToAdminBtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_player);
-        emailInput = findViewById(R.id.emailInput);
-        resetBtn = findViewById(R.id.resetBtn);
+        String uid = getIntent().getStringExtra("uid");
+
         db = FirebaseFirestore.getInstance();
 
-        resetBtn.setOnClickListener(v -> {
-            String email = emailInput.getText().toString().trim();
+        if (uid != null) {
+            resetPlayer(uid);
+        } else {
+            noPlayerMessage("Invalid Player ID");
+        }
+    }
 
-            if (email.isEmpty()) {
-                Toast.makeText(this, "Enter player email", Toast.LENGTH_SHORT).show();
-                return;
+    private void resetPlayer(String uid) {
+        DocumentReference playerRef = db.collection("Player").document(uid);
+
+        playerRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                setScoreToZero(playerRef);
+
+                setProgressToZero(playerRef);
+            } else {
+                noPlayerMessage("Player not found");
             }
-
-            db.collection("players")
-                    .whereEqualTo("email", email)
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        if (queryDocumentSnapshots.isEmpty()) {
-                            Toast.makeText(this, "No player found with that email", Toast.LENGTH_SHORT).show();
-                        } else {
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                doc.getReference().update("score", 0)
-                                        .addOnSuccessListener(unused ->
-                                                Toast.makeText(this, "Score reset for " + email, Toast.LENGTH_SHORT).show())
-                                        .addOnFailureListener(e ->
-                                                Toast.makeText(this, "Reset failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                            }
-                        }
-                    })
-                    .addOnFailureListener(e ->
-                            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            noPlayerMessage("Failed to fetch player");
         });
+    }
 
+    private void setScoreToZero(DocumentReference playerRef) {
+        playerRef.update("score", 0)
+                .addOnSuccessListener(unused -> returnUpdatedValues("Score reset to 0"))
+                .addOnFailureListener(e -> noPlayerMessage("Failed to reset score"));
+    }
 
+    private void setProgressToZero(DocumentReference playerRef) {
+        playerRef.update("progress", 0)
+                .addOnSuccessListener(unused -> returnUpdatedValues("Progress reset to 0"))
+                .addOnFailureListener(e -> noPlayerMessage("Failed to reset progress"));
+    }
 
-        backToAdminBtn.setOnClickListener(v -> {
-            finish();
-        });
+    private void returnUpdatedValues(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void noPlayerMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

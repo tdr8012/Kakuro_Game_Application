@@ -14,10 +14,13 @@
         android:theme="@style/Theme.KakuroGameLatestVersion"
         tools:targetApi="31">
         <activity
-            android:name=".Admin.AddGameTemplateActivity"
+            android:name=".Admin.ResetPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ResetPlayerActivity"
+            android:name=".Admin.DeletePlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AddGameTemplateActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.ViewPlayersActivity"
@@ -35,9 +38,6 @@
             android:theme="@style/Theme.KakuroGameLatestVersion" />
         <activity
             android:name=".Adapter.PlayerAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".Admin.DeletePlayerActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.EditPlayerActivity"

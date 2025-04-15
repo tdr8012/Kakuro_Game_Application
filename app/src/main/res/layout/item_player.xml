@@ -42,10 +42,39 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnView"
-            android:text="View"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnView"
+                android:text="View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#2196F3" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:text="Delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#F44336"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/btnReset"
+                android:text="Reset Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#FF9800"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

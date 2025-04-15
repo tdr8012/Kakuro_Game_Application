@@ -1,58 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    tools:context=".Admin.DeletePlayerActivity">
 
-    <!-- Title with Material Design styling -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/deletePlayerTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Players"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textColor="?attr/colorOnBackground"/>
-
-    <!-- Progress indicator -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
-    <!-- RecyclerView with Material Design card appearance -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/deletePlayerTitle"
-        android:layout_above="@id/logoutBtn"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"/>
-
-    <!-- Logout Button with Material Design -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logoutBtn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        app:icon="@drawable/ic_logout"
-        app:iconGravity="textStart"
-        app:iconPadding="8dp"
-        app:iconTint="@color/error_color"/>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

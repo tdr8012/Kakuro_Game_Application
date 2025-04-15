@@ -7,6 +7,7 @@
     android:background="@drawable/intro_background"
     tools:context=".Admin.AdminDashboardActivity">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/adminTitle"
         android:layout_width="wrap_content"
@@ -17,124 +18,60 @@
         android:textStyle="bold"
         android:fontFamily="sans-serif-black"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="200dp" />
 
+    <!-- ScrollView with Buttons -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@id/adminTitle"
         android:layout_above="@id/adminLogoutBtn"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:padding="10dp">
+            android:gravity="center_horizontal"
+            android:padding="16dp">
 
             <Button
                 android:id="@+id/viewPlayersBtn"
-                android:layout_width="260dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/view_players"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/button_easy"
                 android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:id="@+id/editPlayerBtn"
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:text="@string/edit_player"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_medium"
-                android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:id="@+id/resetScoreBtn"
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:text="@string/reset_score"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_hard"
-                android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:id="@+id/resetLevelBtn"
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:text="@string/reset_level"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_scoreboard"
-                android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:id="@+id/deletePlayerBtn"
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:text="@string/delete_player"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_profile"
-                android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:id="@+id/resetPlayerBtn"
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:text="@string/reset_player"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_scoreboard"
-                android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="20dp" />
 
             <Button
                 android:id="@+id/addGameTemplateBtn"
-                android:layout_width="260dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="@string/add_game_template"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/button_medium"
                 android:elevation="6dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginTop="50dp"
 
-            <Button
-                android:id="@+id/gameTimerChallengeBtn"
-                android:layout_width="260dp"
-                android:layout_height="71dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_profile"
-                android:elevation="10dp"
-                android:text="@string/game_timer_challenge"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:layout_marginBottom="20dp" />
         </LinearLayout>
     </ScrollView>
 
-
+    <!-- Logout Button -->
     <Button
         android:id="@+id/adminLogoutBtn"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="@string/admin_logout"
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:background="@drawable/button_logout"
         android:elevation="6dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_margin="16dp" />
 </RelativeLayout>

@@ -3,7 +3,7 @@
 
     <string name="admin_dashboard_title">Admin Dashboard</string>
 
-    <string name="view_players">VIEW PLAYERS 📋</string>
+    <string name="view_players">PLAYERS 📋</string>
 
     <string name="edit_player">EDIT PLAYER ✏️</string>
 
@@ -20,7 +20,6 @@
     <string name="add_game_template">ADD GAME TEMPLATE ➕</string>
 
     <string name="reset_player">RESET PLAYER 🔄</string>
-
 
 
     <string name="time_limit_hint">Time limit</string>
