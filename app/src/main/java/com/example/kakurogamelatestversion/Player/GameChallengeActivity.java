@@ -73,7 +73,7 @@ public class GameChallengeActivity extends AppCompatActivity {
         currentTemplate = new Template();
         currentTemplate.cellStates = new ArrayList<>();
 
-        templateGrids = ChallengeTemplate.getTemplates();
+        templateGrids = ChallengeTemplate.loadChallengeTemplate();
         templateSolutions = ChallengeTemplate.getSolutions();
 
         startTimer();

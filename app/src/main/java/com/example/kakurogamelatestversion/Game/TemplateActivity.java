@@ -130,7 +130,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     private void loadTemplates() {
         int size = difficulty.equals("easy") ? 3 : (difficulty.equals("medium") ? 4 : 5);
-        List<String[][]> templates = getTemplates(difficulty);
+        List<String[][]> templates = loadTemplates(difficulty);
         List<List<Integer>> solutions = getSolutions(difficulty);
 
         if (templates == null || solutions == null || templates.isEmpty() || solutions.isEmpty()) {
@@ -192,7 +192,7 @@ public class TemplateActivity extends AppCompatActivity {
         Toast.makeText(this, "No hint available", Toast.LENGTH_SHORT).show();
     }
 
-    private List<String[][]> getTemplates(String difficulty) {
+    private List<String[][]> loadTemplates(String difficulty) {
         List<String[][]> templates = new ArrayList<>();
 
         if (difficulty.equals("easy")) {

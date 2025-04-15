@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ChallengeTemplate {
 
-    public static List<String[][]> getTemplates() {
+    public static List<String[][]> loadChallengeTemplate() {
         List<String[][]> templates = new ArrayList<>();
 
         templates.add(new String[][]{
