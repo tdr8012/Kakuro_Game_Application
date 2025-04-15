@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:background="@drawable/intro_background">
 
+    <!-- Template Title -->
     <TextView
         android:id="@+id/templateTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:text="Template"
         android:textSize="24sp"
         android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
+
+    <!-- Hint Status -->
+    <TextView
+        android:id="@+id/hintTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hint: ..."
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/templateTitleTextView"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true" />
+
+    <!-- Timer Status -->
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Timer: ..."
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/templateTitleTextView"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true" />
+
+    <!-- Kakuro Grid -->
+    <GridLayout
+        android:id="@+id/gridContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hintTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:alignmentMode="alignMargins"
+        android:useDefaultMargins="true" />
+
+    <!-- Hint Button -->
+    <Button
+        android:id="@+id/hintBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hint"
+        android:layout_below="@id/gridContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+    <!-- Check Button -->
+    <Button
+        android:id="@+id/checkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check"
+        android:layout_below="@id/hintBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
+
+    <!-- Play Again Button -->
+    <Button
+        android:id="@+id/playAgainBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Again"
+        android:layout_below="@id/checkBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:visibility="gone" />
+
+    <!-- Stop Game Button -->
+    <Button
+        android:id="@+id/stopGameBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Game"
+        android:layout_below="@id/playAgainBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 
 </RelativeLayout>

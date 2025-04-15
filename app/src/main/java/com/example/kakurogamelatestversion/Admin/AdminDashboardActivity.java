@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakurogamelatestversion.R;
@@ -33,10 +34,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
         viewPlayersBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, ViewPlayersActivity.class)));
 
-//        addGameTemplateBtn.setOnClickListener(v ->
-//                startActivity(new Intent(this, AddGameTemplateActivity.class)));
+        // You can enable this when needed
+        // addGameTemplateBtn.setOnClickListener(v ->
+        //         startActivity(new Intent(this, AddGameTemplateActivity.class)));
 
         adminLogoutBtn.setOnClickListener(v -> logoutAdmin());
+
+        // 🔁 Seed button triggers template upload
+
     }
 
     private void verifyAdminStatus() {

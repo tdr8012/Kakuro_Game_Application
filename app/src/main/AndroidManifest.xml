@@ -14,38 +14,86 @@
         android:theme="@style/Theme.KakuroGameLatestVersion"
         tools:targetApi="31">
 
-        <!-- Player Activities -->
-        <activity android:name=".Player.EasyLevelActivity" android:exported="false" />
-        <activity android:name=".Player.GameActivity" android:exported="false"
+        
+        <activity
+            android:name=".Game.TemplateActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Player.GameActivity"
+            android:exported="false"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Player.GameRuleActivity" android:exported="false" />
-        <activity android:name=".Player.GameTimerChallengeActivity" android:exported="false" />
-        <activity android:name=".Player.HardLevelActivity" android:exported="false" />
-        <activity android:name=".Player.MediumLevelActivity" android:exported="false" />
-        <activity android:name=".Player.PlayerDashboardActivity" android:exported="false" />
-        <activity android:name=".Player.ProfileActivity" android:exported="false" />
-        <activity android:name=".Player.ScoreboardActivity" android:exported="false" />
-        <activity android:name=".Player.TemplateActivity" android:exported="false" />
+
+        <activity
+            android:name=".Player.GameRuleActivity"
+            android:exported="false" />
+
+
+
+        <!-- Player Activities -->
+        <activity
+            android:name=".Player.PlayerDashboardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Player.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Player.ScoreboardActivity"
+            android:exported="false" />
 
         <!-- Admin Activities -->
-        <activity android:name=".Admin.ResetPlayerActivity" android:exported="false" />
-        <activity android:name=".Admin.DeletePlayerActivity" android:exported="false" />
-        <activity android:name=".Admin.ViewPlayersActivity" android:exported="false" />
-        <activity android:name=".Admin.PlayerDetailActivity" android:exported="false"
+        <activity
+            android:name=".Admin.ResetPlayerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Admin.DeletePlayerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Admin.ViewPlayersActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Admin.PlayerDetailActivity"
+            android:exported="false"
             android:label="@string/title_activity_player_detai"
             android:theme="@style/Theme.KakuroGameLatestVersion" />
-        <activity android:name=".Admin.AdminDashboardActivity" android:exported="false" />
 
-        <activity android:name=".Adapter.PlayerAdapter" android:exported="false" tools:ignore="Instantiatable" />
-        <activity android:name=".Adapter.ScoreboardAdapter" android:exported="false" tools:ignore="Instantiatable" />
+        <activity
+            android:name=".Admin.AdminDashboardActivity"
+            android:exported="false" />
+
+        <!-- Adapter Classes -->
+        <activity
+            android:name=".Adapter.PlayerAdapter"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+
+        <activity
+            android:name=".Adapter.ScoreboardAdapter"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
 
         <!-- Utility Activities -->
-        <activity android:name=".Utils.RegisterActivity" android:exported="false" />
-        <activity android:name=".Utils.LoginActivity" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="false" />
+        <activity
+            android:name=".Utils.RegisterActivity"
+            android:exported="false" />
 
-        <!-- Splash / Launcher -->
-        <activity android:name=".Utils.SplashActivity" android:exported="true">
+        <activity
+            android:name=".Utils.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Launcher -->
+        <activity
+            android:name=".Utils.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
