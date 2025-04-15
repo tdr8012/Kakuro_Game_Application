@@ -34,6 +34,8 @@ public class TemplateActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private Game game;
+
 
     private int remainingHints = 0;
     private boolean gameStateOn = false;
@@ -66,6 +68,7 @@ public class TemplateActivity extends AppCompatActivity {
 
         createGame();
         setGameStateOn();
+        game = new Game();
         setLevelDifficulty(difficulty);
         loadTemplates();
 
@@ -96,20 +99,23 @@ public class TemplateActivity extends AppCompatActivity {
         gameStateOn = true;
     }
 
+
     private void setLevelDifficulty(String difficultyLevel) {
         if (difficultyLevel.equals("easy")) {
-            remainingHints = Integer.MAX_VALUE;
+            game.setHintOn(Integer.MAX_VALUE);
             hintTextView.setText("Hint: Unlimited");
             timerTextView.setText("Timer: Off");
         } else if (difficultyLevel.equals("medium")) {
-            remainingHints = 3;
+            game.setHintOn(3);
             hintTextView.setText("Hint: 3");
-            setTimerOn();
+            game.setTimerOn(this, timerTextView, this::endGame);
         } else {
+            game.setHintOff();
             hintTextView.setText("Hint: Disabled");
-            setTimerOn();
+            game.setTimerOn(this, timerTextView, this::endGame);
         }
     }
+
 
     private void setTimerOn() {
         countDownTimer = new CountDownTimer(5 * 60 * 1000, 1000) {
@@ -167,7 +173,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     private void showHint() {
         if (difficulty.equals("hard")) return;
-        if (difficulty.equals("medium") && remainingHints <= 0) {
+        if (!game.hasHints()) {
             Toast.makeText(this, "No hints left!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -181,8 +187,12 @@ public class TemplateActivity extends AppCompatActivity {
                 if (cell instanceof EditText) {
                     ((EditText) cell).setText(String.valueOf(val));
                     selectedTemplate.cellStates.get(i).setValue(val);
-                    if (difficulty.equals("medium")) remainingHints--;
-                    updateHintText();
+
+                    if (difficulty.equals("medium")) {
+                        game.consumeHint();
+                        updateHintText();
+                    }
+
                     checkGameCompletion();
                     Toast.makeText(this, "Hint filled: " + val, Toast.LENGTH_SHORT).show();
                     return;
@@ -192,76 +202,71 @@ public class TemplateActivity extends AppCompatActivity {
         Toast.makeText(this, "No hint available", Toast.LENGTH_SHORT).show();
     }
 
+
     private List<String[][]> loadTemplates(String difficulty) {
         List<String[][]> templates = new ArrayList<>();
 
         if (difficulty.equals("easy")) {
             templates.add(new String[][]{
-                    {"/", "⬍3", "⬍4"},
+                    {"/", "⬍4", "⬍3"},
                     {"➞7", "", ""},
                     {"/", "/", "/"}
             });
+
             templates.add(new String[][]{
-                    {"/", "⬍10", "⬍7"},
-                    {"➞10", "", ""},
-                    {"➞7", "", ""}
-            });
-            templates.add(new String[][]{
-                    {"/", "⬍6", "⬍4"},
+                    {"/", "⬍1", "⬍4"},
                     {"➞5", "", ""},
-                    {"➞5", "", ""}
+                    {"/", "/", "/"}
             });
+
             templates.add(new String[][]{
-                    {"/", "⬍8", "⬍9"},
-                    {"➞7", "", ""},
-                    {"➞10", "", ""}
-            });
-            templates.add(new String[][]{
-                    {"/", "⬍5", "⬍8"},
+                    {"/", "⬍5", "⬍4"},
                     {"➞9", "", ""},
-                    {"➞4", "", ""}
+                    {"/", "/", "/"}
             });
+
         } else if (difficulty.equals("medium")) {
             templates.add(new String[][]{
-                    {"/", "⬍4", "⬍3", "/"},
-                    {"➞7", "", "", "⬍7"},
-                    {"/", "/", "➞4", ""},
+                    {"/", "⬍7", "⬍4", "/"},
+                    {"➞10", "", "", "⬍4"},
+                    {"/", "/", "➞3", ""},
                     {"/", "/", "/", "/"}
             });
 
             templates.add(new String[][]{
-                    {"/", "⬍7", "⬍8", "/"},
-                    {"➞12", "", "", "⬍4"},
-                    {"/", "/", "➞5", ""},
+                    {"/", "⬍6", "⬍8", "/"},
+                    {"➞11", "", "", "⬍4"},
+                    {"/", "/", "➞7", ""},
                     {"/", "/", "/", "/"}
             });
 
             templates.add(new String[][]{
-                    {"/", "⬍6", "⬍7", "/"},
-                    {"➞11", "", "", "⬍3"},
-                    {"/", "/", "➞5", ""},
+                    {"/", "⬍5", "⬍7", "/"},
+                    {"➞9", "", "", "⬍4"},
+                    {"/", "/", "➞3", ""},
                     {"/", "/", "/", "/"}
             });
+
         } else if (difficulty.equals("hard")) {
             templates.add(new String[][]{
-                    {"/", "⬍6", "⬍9", "⬍10", "/"},
-                    {"➞15", "", "", "", "⬍7"},
-                    {"➞7", "", "", "", "/"},
+                    {"/", "⬍8", "⬍9", "⬍7", "/"},
+                    {"➞15", "", "", "", "⬍6"},
+                    {"➞10", "", "", "", "/"},
                     {"/", "/", "/", "/", "/"},
                     {"/", "/", "/", "/", "/"}
             });
 
             templates.add(new String[][]{
-                    {"/", "⬍9", "⬍14", "⬍10", "/"},
-                    {"➞20", "", "", "", "⬍8"},
-                    {"➞6", "", "", "", "/"},
+                    {"/", "⬍6", "⬍11", "⬍7", "/"},
+                    {"➞13", "", "", "", "⬍5"},
+                    {"➞8", "", "", "", "/"},
                     {"/", "/", "/", "/", "/"},
                     {"/", "/", "/", "/", "/"}
             });
 
             templates.add(new String[][]{
-                    {"/", "⬍11", "⬍7", "⬍12", "/"},
-                    {"➞21", "", "", "", "⬍6"},
+                    {"/", "⬍7", "⬍10", "⬍8", "/"},
+                    {"➞14", "", "", "", "⬍7"},
                     {"➞9", "", "", "", "/"},
                     {"/", "/", "/", "/", "/"},
                     {"/", "/", "/", "/", "/"}
@@ -275,53 +280,53 @@ public class TemplateActivity extends AppCompatActivity {
         List<List<Integer>> solutions = new ArrayList<>();
 
         if (difficulty.equals("easy")) {
-            solutions.add(Arrays.asList(0, 0, 0, 4, 3, 0, 0, 0, 0));
-            solutions.add(Arrays.asList(0, 0, 0, 6, 4, 0, 3, 4, 0));
-            solutions.add(Arrays.asList(0, 0, 0, 2, 3, 0, 4, 1, 0));
-            solutions.add(Arrays.asList(0, 0, 0, 4, 3, 0, 7, 3, 0));
-            solutions.add(Arrays.asList(0, 0, 0, 5, 4, 0, 2, 2, 0));
+            solutions.add(Arrays.asList(0, 0, 0, 3, 4, 0, 0, 0, 0)); // 3+4 = 7
+            solutions.add(Arrays.asList(0, 0, 0, 2, 3, 0, 0, 0, 0)); // 2+3 = 5
+            solutions.add(Arrays.asList(0, 0, 0, 4, 5, 0, 0, 0, 0)); // 4+5 = 9
+
         } else if (difficulty.equals("medium")) {
             solutions.add(Arrays.asList(
                     0, 0, 0, 0,
-                    3, 4, 0, 3,
-                    0, 0, 4, 0,
+                    6, 4, 0, 4,
+                    0, 0, 1, 2,
                     0, 0, 0, 0
             ));
 
             solutions.add(Arrays.asList(
                     0, 0, 0, 0,
-                    5, 7, 0, 4,
-                    0, 0, 2, 3,
+                    5, 6, 0, 4,
+                    0, 0, 3, 4,
                     0, 0, 0, 0
             ));
 
             solutions.add(Arrays.asList(
                     0, 0, 0, 0,
-                    6, 5, 0, 3,
-                    0, 0, 2, 3,
+                    2, 7, 0, 4,
+                    0, 0, 1, 2,
                     0, 0, 0, 0
             ));
+
         } else if (difficulty.equals("hard")) {
             solutions.add(Arrays.asList(
                     0, 0, 0, 0, 0,
-                    5, 4, 3, 3, 0,
-                    2, 5, 0, 0, 0,
+                    4, 5, 3, 3, 0,
+                    3, 2, 4, 1, 0,
                     0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0
             ));
 
             solutions.add(Arrays.asList(
                     0, 0, 0, 0, 0,
-                    6, 7, 4, 3, 0,
-                    2, 1, 3, 0, 0,
+                    5, 6, 2, 0, 0,
+                    3, 4, 1, 0, 0,
                     0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0
             ));
 
             solutions.add(Arrays.asList(
                     0, 0, 0, 0, 0,
-                    9, 6, 5, 1, 0,
-                    4, 5, 0, 0, 0,
+                    6, 5, 2, 1, 0,
+                    3, 2, 4, 0, 0,
                     0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0
             ));
@@ -333,9 +338,10 @@ public class TemplateActivity extends AppCompatActivity {
 
     private void updateHintText() {
         if (difficulty.equals("medium")) {
-            hintTextView.setText("Hint: " + remainingHints);
+            hintTextView.setText("Hint: " + game.getRemainingHints());
         }
     }
+
 
     private List<Integer> flattenSolution(List<List<Integer>> solution) {
         List<Integer> flat = new ArrayList<>();
@@ -348,16 +354,25 @@ public class TemplateActivity extends AppCompatActivity {
         boolean isComplete = true;
 
         List<Integer> flatSolution = flattenSolution(selectedTemplate.solution);
-        for (int i = 0; i < size * size; i++) {
+        int solutionIndex = 0;
+
+        for (int i = 0; i < gridContainer.getChildCount(); i++) {
             View cell = gridContainer.getChildAt(i);
+
             if (cell instanceof EditText) {
                 EditText input = (EditText) cell;
                 String valStr = input.getText().toString().trim();
-                int expected = flatSolution.get(i);
+                int expected = flatSolution.get(solutionIndex);
                 int entered = valStr.isEmpty() ? 0 : Integer.parseInt(valStr);
+
                 if (entered != expected) {
                     isComplete = false;
                     break;
+                }
+                solutionIndex++;
+            } else if (cell instanceof TextView) {
+                if (solutionIndex < flatSolution.size()) {
+                    solutionIndex++;
                 }
             }
         }
@@ -365,6 +380,7 @@ public class TemplateActivity extends AppCompatActivity {
         if (isComplete) {
             Toast.makeText(this, "✅ Correct! You solved the puzzle!", Toast.LENGTH_LONG).show();
             playAgainBtn.setVisibility(View.VISIBLE);
+            updateScore();
         } else {
             Toast.makeText(this, "❌ Incorrect, try again.", Toast.LENGTH_SHORT).show();
         }
@@ -436,11 +452,18 @@ public class TemplateActivity extends AppCompatActivity {
     }
 
     private void stopGame() {
-        if (countDownTimer != null) countDownTimer.cancel();
+        game.setTimerOff();
         gameStateOn = false;
         Toast.makeText(this, "Game stopped", Toast.LENGTH_SHORT).show();
         redirectToDashboard();
     }
+
+    @Override
+    protected void onDestroy() {
+        game.setTimerOff();
+        super.onDestroy();
+    }
+
 
     private void endGame() {
         gameStateOn = false;
@@ -455,9 +478,5 @@ public class TemplateActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (countDownTimer != null) countDownTimer.cancel();
-        super.onDestroy();
-    }
+
 }
