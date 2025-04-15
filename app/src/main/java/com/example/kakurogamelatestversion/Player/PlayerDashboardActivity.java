@@ -36,10 +36,11 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         btnMedium.setOnClickListener(v -> launchGame("medium"));
         btnHard.setOnClickListener(v -> launchGame("hard"));
 
-        //challengeBtn.setOnClickListener(v -> {
-            //Intent intent = new Intent(this, GameTimerChallengeActivity.class);
-            //startActivity(intent);
-        //});
+        challengeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, GameChallengeActivity.class);
+            startActivity(intent);
+        });
+
 
         gameRuleBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, GameRuleActivity.class);

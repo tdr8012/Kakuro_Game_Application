@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,17 +48,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         goBackBtn.setOnClickListener(v -> finish());
 
-        loadUserProfile();
+        validateAccessAndLoadProfile();
     }
 
-    private void loadUserProfile() {
+    private void validateAccessAndLoadProfile() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null || user.isAnonymous()) {
-            displayGuestMessage();
-            return;
+            Toast.makeText(this, "Profile not available for guest users", Toast.LENGTH_SHORT).show();
+            finish(); // Go back immediately
+        } else {
+            loadUserProfile(user.getUid());
         }
+    }
 
-        String uid = user.getUid();
+    private void loadUserProfile(String uid) {
         db.collection("Player").document(uid).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String firstName = documentSnapshot.getString("firstName");
@@ -87,19 +91,13 @@ public class ProfileActivity extends AppCompatActivity {
                     imageProfile.setImageResource(R.drawable.ic_profile_placeholder);
                 }
             } else {
-                displayGuestMessage();
+                showMissingProfileMessage();
             }
-        }).addOnFailureListener(e -> displayGuestMessage());
+        }).addOnFailureListener(e -> showMissingProfileMessage());
     }
 
-    private void displayGuestMessage() {
-        txtName.setText("Please sign in to view your profile details.");
-        txtEmail.setText("");
-        txtPhone.setText("");
-        txtScore.setText("");
-        txtRole.setText("");
-        txtUid.setText("");
-        txtCreated.setText("");
-        imageProfile.setImageResource(R.drawable.ic_profile_placeholder);
+    private void showMissingProfileMessage() {
+        Toast.makeText(this, "Unable to load profile. Try again later.", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

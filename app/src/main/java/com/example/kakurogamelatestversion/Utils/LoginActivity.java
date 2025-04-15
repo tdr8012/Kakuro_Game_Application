@@ -139,11 +139,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void playAsGuest() {
-        Intent intent = new Intent(this, PlayerDashboardActivity.class);
-        intent.putExtra("guest", true);
-        startActivity(intent);
-        finish();
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Playing as guest", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, PlayerDashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Guest sign-in failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 
     private void navigateToPlayerDashboardActivity() {
         Intent intent = new Intent(LoginActivity.this, PlayerDashboardActivity.class);
