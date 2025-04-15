@@ -27,15 +27,50 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         Button btnMedium = findViewById(R.id.mediumBtn);
         Button btnHard = findViewById(R.id.hardBtn);
         Button btnLogout = findViewById(R.id.logoutBtn);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button gameRuleBtn = findViewById(R.id.gameRuleBtn);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        Button gameRuleBtn = findViewById(R.id.gameRuleBtn);
+        Button profileBtn = findViewById(R.id.profileBtn);
+        Button scoreboardBtn = findViewById(R.id.scoreboardBtn);
+
+        btnEasy.setOnClickListener(v -> startLevelActivity("easy"));
+        btnMedium.setOnClickListener(v -> startLevelActivity("medium"));
+        btnHard.setOnClickListener(v -> startLevelActivity("hard"));
 
         btnLogout.setOnClickListener(v -> logoutUser());
+
         gameRuleBtn.setOnClickListener(v -> navigateToGameRuleActivity());
 
+
+        profileBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(PlayerDashboardActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
+        scoreboardBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(PlayerDashboardActivity.this, ScoreboardActivity.class);
+            startActivity(intent);
+        });
+
     }
-
+    private void startLevelActivity(String difficulty) {
+        Intent intent;
+        switch (difficulty) {
+            case "easy":
+                intent = new Intent(PlayerDashboardActivity.this, EasyLevelActivity.class);
+                break;
+            case "medium":
+                intent = new Intent(PlayerDashboardActivity.this, MediumLevelActivity.class);
+                break;
+            case "hard":
+                intent = new Intent(PlayerDashboardActivity.this, HardLevelActivity.class);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid difficulty level");
+        }
+        intent.putExtra("DIFFICULTY_LEVEL", difficulty);
+        startActivity(intent);
+    }
     private void navigateToGameTimerChallengeActivity() {
-
         Intent intent = new Intent(PlayerDashboardActivity.this, GameTimerChallengeActivity.class);
         startActivity(intent);
     }
@@ -45,6 +80,7 @@ public class PlayerDashboardActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void logoutUser() {
         mAuth.signOut();
         Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
