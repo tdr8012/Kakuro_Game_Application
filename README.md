@@ -1,4 +1,4 @@
-# Kakuro Game App (On-Going Project)
+# Kakuro Game App (Finished Project)
 
 ## Overview
 This project is part of the **C2_INFORMATION SYSTEMS IMPLEMENTATION** course at **LaSalle College**. The Kakuro Game App is an interactive Android-based puzzle game similar to Sudoku but requiring mathematical reasoning. Players fill a grid with numbers (1-9) to match predefined sums without repetition. The app features an engaging UI, multiple game modes, user authentication, and a scoreboard system to enhance replayability.
